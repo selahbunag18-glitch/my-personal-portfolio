@@ -1,15 +1,13 @@
 <script setup>
+import { ref } from 'vue'
+
 // Each object = one project card. Edit the text here, not in the template.
-// image = the screenshot in public/assets/projects/
-// visualLabel and lines = from the old placeholder window (not used anymore)
-// actionStyle = 'primary' (dark button) or 'ghost' (outlined button)
-const projects = [
+// isFlipped = true when the card is showing its back side
+// liveUrl / githubUrl = a button only shows if the link exists
+const projects = ref([
   {
     image: '/assets/projects/jf-villiamor.png',
-    visualLabel: 'jf-villiamor.pages.dev',
-    lines: [70, 85, 48, 60, 36],
-    type: 'Client website',
-    title: 'JF Villiamor — Business Page Growth & Lead Generation',
+    title: 'JF Villiamor - Business Page Growth & Lead Generation',
     description:
       'Business website for a client offering Facebook page growth and lead generation services, including Meta ads support and a Business AI chatbot setup.',
     features: [
@@ -19,15 +17,11 @@ const projects = [
       'Responsive for desktop and mobile',
     ],
     stack: ['HTML', 'CSS', 'JavaScript'],
-    actionLabel: 'View live site',
-    actionUrl: 'https://jf-villiamor.pages.dev/',
-    actionStyle: 'primary',
+    liveUrl: 'https://jf-villiamor.pages.dev/',
+    isFlipped: false,
   },
   {
     image: '/assets/projects/personal-portfolio.png',
-    visualLabel: 'index.html',
-    lines: [78, 52, 64, 40, 70],
-    type: 'Personal project',
     title: 'Personal Portfolio Website',
     description:
       'My personal portfolio website, showcasing my background, skills, projects, learning experience, and certificates.',
@@ -37,57 +31,91 @@ const projects = [
       'Reusable sections and data-driven content',
       'Direct links to GitHub, LinkedIn, and email',
     ],
-    stack: ['Vue.js', 'Vite', 'HTML', 'CSS', 'JavaScript'],
-    actionLabel: 'View source on GitHub',
-    actionUrl: 'https://github.com/selahbunag18-glitch',
-    actionStyle: 'ghost',
+    stack: ['HTML', 'CSS', 'JavaScript', 'Vue.js', 'Vite'],
+    githubUrl: 'https://github.com/selahbunag18-glitch',
+    isFlipped: false,
   },
-]
+])
+
+// Flips only the card that was clicked
+function toggleCard(project) {
+  project.isFlipped = !project.isFlipped
+}
 </script>
 
 <template>
   <section class="section" id="projects">
     <div class="section-inner">
       <div class="section-head">
-        <h2>Projects</h2>
+        <p class="eyebrow">Projects</p>
+        <h2>Featured work.</h2>
       </div>
 
-      <div class="project-list">
-        <div v-for="project in projects" :key="project.title" class="project-card">
-          <div class="project-visual">
-            <img
-              :src="project.image"
-              :alt="'Screenshot of ' + project.title"
-              class="project-visual-image"
-              loading="lazy"
-            >
-          </div>
-
-          <div class="project-info">
-            <p class="mono-label">{{ project.type }}</p>
-            <h3>{{ project.title }}</h3>
-            <p>{{ project.description }}</p>
-
-            <div class="project-features">
-              <ul>
-                <li v-for="feature in project.features" :key="feature">{{ feature }}</li>
-              </ul>
+      <div class="flip-grid">
+        <div
+          v-for="project in projects"
+          :key="project.title"
+          class="flip-card"
+          :class="{ 'is-flipped': project.isFlipped }"
+        >
+          <div class="flip-inner">
+            <!-- FRONT -->
+            <!-- "inert" stops keyboard focus on the side that is hidden -->
+            <div class="flip-face flip-front" :inert="project.isFlipped ? true : null">
+              <img
+                :src="project.image"
+                :alt="'Screenshot of ' + project.title"
+                class="flip-image"
+                loading="lazy"
+              >
+              <h3>{{ project.title }}</h3>
+              <p>{{ project.description }}</p>
+              <button type="button" class="btn btn-primary btn-sm flip-btn" @click="toggleCard(project)">
+                Learn More →
+              </button>
             </div>
 
-            <div class="project-stack">
-              <p class="mono-label">Built with</p>
-              <ul class="tag-list">
-                <li v-for="tech in project.stack" :key="tech">{{ tech }}</li>
-              </ul>
-            </div>
+            <!-- BACK -->
+            <div class="flip-face flip-back" :inert="project.isFlipped ? null : true">
+              <!-- Back button is now at the top -->
+              <button type="button" class="btn btn-ghost btn-sm flip-back-btn" @click="toggleCard(project)">
+                ← Back
+              </button>
 
-            <div class="project-actions">
-              <a
-                :href="project.actionUrl"
-                target="_blank"
-                rel="noopener noreferrer"
-                :class="['btn', 'btn-' + project.actionStyle, 'btn-sm']"
-              >{{ project.actionLabel }}</a>
+              <h3>{{ project.title }}</h3>
+              <p>{{ project.description }}</p>
+
+              <div class="project-features">
+                <p class="mono-label">Details</p>
+                <ul>
+                  <li v-for="feature in project.features" :key="feature">{{ feature }}</li>
+                </ul>
+              </div>
+
+              <div class="project-stack">
+                <p class="mono-label">Built with</p>
+                <ul class="tag-list">
+                  <li v-for="tech in project.stack" :key="tech">{{ tech }}</li>
+                </ul>
+              </div>
+
+              <!-- Action buttons stay at the bottom -->
+              <div class="flip-actions">
+                <a
+                  v-if="project.liveUrl"
+                  :href="project.liveUrl"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn btn-primary btn-sm"
+                >View Live Site</a>
+                <a
+                  v-if="project.githubUrl"
+                  :href="project.githubUrl"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn btn-ghost btn-sm"
+                >View Source on GitHub</a>
+              </div>
             </div>
           </div>
         </div>

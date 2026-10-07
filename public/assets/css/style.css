@@ -385,6 +385,7 @@ p{ margin: 0; }
 .hero-photo{
   width: 100%;
   max-width: 380px;
+  height: auto;
   aspect-ratio: 4 / 5;
   object-fit: cover;
   object-position: center 25%;
@@ -576,6 +577,71 @@ p{ margin: 0; }
 }
 
 /* =========================
+   Projects - flip cards
+   ========================= */
+.flip-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr));
+  gap: var(--sp-6);
+}
+
+.flip-card{ perspective: 1400px; }
+
+/* Front and back share ONE grid cell, so the taller side sets the card height */
+.flip-inner{
+  display: grid;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform .7s cubic-bezier(.4, .2, .2, 1);
+}
+
+.flip-card.is-flipped .flip-inner{ transform: rotateY(180deg); }
+
+.flip-face{
+  grid-area: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  padding: var(--sp-6);
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-sm);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.flip-back{ transform: rotateY(180deg); }
+
+/* Front */
+.flip-front{ text-align: center; }
+
+.flip-image{
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  object-position: top center;
+  border-radius: var(--r-md);
+  border: 1px solid var(--hairline);
+  margin-bottom: var(--sp-5);
+}
+
+.flip-front h3{ font-size: 22px; line-height: 1.25; margin-bottom: var(--sp-3); }
+.flip-front p{ font-size: 15px; margin-bottom: var(--sp-5); }
+.flip-front .flip-btn{ margin-top: auto; align-self: center; }
+
+/* Back */
+.flip-back h3{ font-size: 22px; line-height: 1.25; margin-bottom: var(--sp-3); }
+.flip-back > p{ font-size: 15px; margin-bottom: var(--sp-5); }
+.flip-back .project-features,
+.flip-back .project-stack{ margin-bottom: var(--sp-5); }
+.flip-actions{ display: flex; flex-wrap: wrap; gap: var(--sp-3); margin-top: auto; }
+.flip-back-btn{ align-self: flex-start; margin-bottom: var(--sp-5); }
+
+@media (max-width: 540px){
+  .flip-face{ padding: var(--sp-5); }
+}
+
+/* =========================
    Learning
    ========================= */
 
@@ -673,6 +739,76 @@ p{ margin: 0; }
 .cert-meta dd{ margin: 2px 0 0; font-weight: 600; color: var(--ink); font-size: 14px; }
 
 .cert-note{ margin-top: var(--sp-5); font-size: 14px; color: var(--muted); }
+
+/* Certificate thumbnail is now a <button>: reset the browser's button look */
+button.cert-thumb{
+  width: 100%;
+  padding: 0;
+  border: 0;
+  border-bottom: 1px solid var(--hairline);
+  font: inherit;
+  color: inherit;
+  text-align: inherit;
+  cursor: zoom-in;
+}
+
+/* =========================
+   Certificates - lightbox
+   ========================= */
+.lightbox{
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(10, 12, 16, .88);
+  overscroll-behavior: contain;
+}
+
+.lightbox-image{
+  flex: none;
+  width: auto;
+  height: auto;
+  max-width: 90vw;
+  max-height: 90vh;
+  max-height: 90dvh;
+  object-fit: contain;
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-lg);
+}
+
+.lightbox-close{
+  position: absolute;
+  top: var(--sp-4);
+  right: var(--sp-4);
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, .25);
+  background: rgba(255, 255, 255, .12);
+  color: #fff;
+  cursor: pointer;
+  transition: background-color .18s ease;
+}
+
+.lightbox-close:hover{ background: rgba(255, 255, 255, .24); }
+
+/* Fade the dark background and scale the certificate slightly */
+.lightbox-enter-active,
+.lightbox-leave-active{ transition: opacity .25s ease; }
+
+.lightbox-enter-active .lightbox-image,
+.lightbox-leave-active .lightbox-image{ transition: transform .25s ease; }
+
+.lightbox-enter-from,
+.lightbox-leave-to{ opacity: 0; }
+
+.lightbox-enter-from .lightbox-image,
+.lightbox-leave-to .lightbox-image{ transform: scale(.96); }
 
 /* =========================
    Education
