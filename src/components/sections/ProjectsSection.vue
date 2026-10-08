@@ -3,7 +3,7 @@ import { ref } from 'vue'
 
 // Each object = one project card. Edit the text here, not in the template.
 // isFlipped = true when the card is showing its back side
-// liveUrl / githubUrl = a button only shows if the link exists
+// liveUrl / githubUrl = the action button only shows if the link exists
 const projects = ref([
   {
     image: '/assets/projects/jf-villiamor.png',
@@ -32,7 +32,6 @@ const projects = ref([
       'Direct links to GitHub, LinkedIn, and email',
     ],
     stack: ['HTML', 'CSS', 'JavaScript', 'Vue.js', 'Vite'],
-    githubUrl: 'https://github.com/selahbunag18-glitch',
     isFlipped: false,
   },
 ])
@@ -52,41 +51,32 @@ function toggleCard(project) {
       </div>
 
       <div class="flip-grid">
+        <!-- Outer card -->
         <div
           v-for="project in projects"
           :key="project.title"
           class="flip-card"
           :class="{ 'is-flipped': project.isFlipped }"
         >
+          <!-- Inner element: this is the part that rotates -->
           <div class="flip-inner">
-            <!-- FRONT -->
-            <!-- "inert" stops keyboard focus on the side that is hidden -->
+            <!-- FRONT FACE -->
+            <!-- "inert" stops keyboard focus and clicks on the side that is hidden -->
             <div class="flip-face flip-front" :inert="project.isFlipped ? true : null">
-              <img
-                :src="project.image"
-                :alt="'Screenshot of ' + project.title"
-                class="flip-image"
-                loading="lazy"
-              >
               <h3>{{ project.title }}</h3>
+              <img :src="project.image" :alt="'Screenshot of ' + project.title" class="flip-image" loading="lazy">
+
               <p>{{ project.description }}</p>
-              <button type="button" class="btn btn-primary btn-sm flip-btn" @click="toggleCard(project)">
-                Learn More →
-              </button>
+              <a href="#" class="learn-more" @click.prevent="toggleCard(project)">Learn More →</a>
             </div>
 
-            <!-- BACK -->
+            <!-- BACK FACE -->
             <div class="flip-face flip-back" :inert="project.isFlipped ? null : true">
-              <!-- Back button is now at the top -->
-              <button type="button" class="btn btn-ghost btn-sm flip-back-btn" @click="toggleCard(project)">
-                ← Back
-              </button>
-
+              <button type="button" class="back-button" @click="toggleCard(project)">← Back</button>
               <h3>{{ project.title }}</h3>
               <p>{{ project.description }}</p>
 
               <div class="project-features">
-                <p class="mono-label">Details</p>
                 <ul>
                   <li v-for="feature in project.features" :key="feature">{{ feature }}</li>
                 </ul>
@@ -99,7 +89,7 @@ function toggleCard(project) {
                 </ul>
               </div>
 
-              <!-- Action buttons stay at the bottom -->
+              <!-- Action button stays at the bottom -->
               <div class="flip-actions">
                 <a
                   v-if="project.liveUrl"
@@ -107,7 +97,7 @@ function toggleCard(project) {
                   target="_blank"
                   rel="noopener noreferrer"
                   class="btn btn-primary btn-sm"
-                >View Live Site</a>
+                >View live site</a>
                 <a
                   v-if="project.githubUrl"
                   :href="project.githubUrl"

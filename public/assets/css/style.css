@@ -585,10 +585,17 @@ p{ margin: 0; }
   gap: var(--sp-6);
 }
 
-.flip-card{ perspective: 1400px; }
+/* Outer card: gives the 3D depth */
+.flip-card{
+  position: relative;
+  perspective: 1400px;
+}
 
-/* Front and back share ONE grid cell, so the taller side sets the card height */
+/* Inner element: this is what rotates. It fills the whole card.
+   Front and back share ONE grid cell, so both faces have the same size
+   and the taller one sets the card height (no fixed height, nothing cut off). */
 .flip-inner{
+  position: relative;
   display: grid;
   height: 100%;
   transform-style: preserve-3d;
@@ -597,6 +604,7 @@ p{ margin: 0; }
 
 .flip-card.is-flipped .flip-inner{ transform: rotateY(180deg); }
 
+/* Both faces: full card area, own padding, hidden when facing away */
 .flip-face{
   grid-area: 1 / 1;
   display: flex;
@@ -612,14 +620,16 @@ p{ margin: 0; }
 
 .flip-back{ transform: rotateY(180deg); }
 
-/* Front */
+/* ----- Front face ----- */
 .flip-front{ text-align: center; }
 
+/* Whole screenshot visible: natural aspect ratio, no crop, no zoom, no stretch */
 .flip-image{
+  display: block;
   width: 100%;
-  aspect-ratio: 16 / 10;
-  object-fit: cover;
-  object-position: top center;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
   border-radius: var(--r-md);
   border: 1px solid var(--hairline);
   margin-bottom: var(--sp-5);
@@ -627,15 +637,69 @@ p{ margin: 0; }
 
 .flip-front h3{ font-size: 22px; line-height: 1.25; margin-bottom: var(--sp-3); }
 .flip-front p{ font-size: 15px; margin-bottom: var(--sp-5); }
-.flip-front .flip-btn{ margin-top: auto; align-self: center; }
 
-/* Back */
-.flip-back h3{ font-size: 22px; line-height: 1.25; margin-bottom: var(--sp-3); }
-.flip-back > p{ font-size: 15px; margin-bottom: var(--sp-5); }
-.flip-back .project-features,
-.flip-back .project-stack{ margin-bottom: var(--sp-5); }
-.flip-actions{ display: flex; flex-wrap: wrap; gap: var(--sp-3); margin-top: auto; }
-.flip-back-btn{ align-self: flex-start; margin-bottom: var(--sp-5); }
+/* "Learn More →" is a plain text link: no background, border, padding or pill shape.
+   The underline is always there but transparent, so it fades in on hover. */
+.learn-more{
+  margin-top: auto;
+  align-self: center;
+  padding: 0;
+  background: none;
+  border: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 4px;
+  transition: text-decoration-color .2s ease;
+}
+
+.learn-more:hover{ text-decoration-color: currentColor; }
+
+/* ----- Back face -----
+   Content flows from the top with small, controlled spacing (same density as the front).
+   Any extra card height stays empty at the BOTTOM instead of being spread between items. */
+.flip-back{ justify-content: flex-start; }
+
+/* Small "← Back" button at the upper-left of the back face.
+   fit-content = only as wide as its text, never full width. */
+.back-button{
+  align-self: flex-start;
+  flex: none;
+  width: fit-content;
+  margin: 0 0 16px;
+  padding: 6px 12px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--ink);
+  background: var(--canvas-alt);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-md);
+  cursor: pointer;
+  transition: background-color .18s ease, border-color .18s ease;
+}
+
+.back-button:hover{ background: var(--hairline); border-color: var(--hairline-strong); }
+
+.flip-back h3{
+  margin: 0 0 12px;
+  font-size: 22px;
+  line-height: 1.25;
+  text-align: center;
+}
+
+.flip-back > p{ margin: 0 0 16px; font-size: 15px; }
+
+.flip-back .project-features{ margin: 0 0 16px; }
+.flip-back .project-features ul{ margin-top: 0; }
+
+.flip-back .project-stack{ margin: 0 0 18px; }
+
+/* Action button(s) follow the tags directly (no longer pushed to the bottom) */
+.flip-actions{ display: flex; flex-wrap: wrap; gap: var(--sp-3); margin-top: 4px; }
 
 @media (max-width: 540px){
   .flip-face{ padding: var(--sp-5); }
@@ -937,3 +1001,24 @@ button.cert-thumb{
 .reveal{ opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s ease; }
 
 .reveal.in{ opacity: 1; transform: translateY(0); }
+/* ----- Back face: compact spacing (back only, the front is not touched) -----
+   ".flip-card .flip-back" is more specific than the older rules,
+   so these values win even if an old gap / margin-top: auto is still in the file. */
+.flip-card .flip-back{
+  justify-content: flex-start;  /* content starts at the top, never spread out */
+  gap: 0;                       /* spacing now comes from the margins below */
+}
+
+.flip-card .flip-back .back-button{
+  align-self: flex-start;
+  flex: none;
+  width: fit-content;
+  margin: 0 0 16px;             /* 16px between ← Back and the title */
+}
+
+.flip-card .flip-back h3{ margin: 0 0 12px; text-align: center; }
+.flip-card .flip-back > p{ margin: 0 0 16px; }
+.flip-card .flip-back .project-features{ margin: 0 0 16px; }
+.flip-card .flip-back .project-features ul{ margin: 0; }
+.flip-card .flip-back .project-stack{ margin: 0 0 18px; }
+.flip-card .flip-back .flip-actions{ margin: 0; }  /* sits right under the tags */
