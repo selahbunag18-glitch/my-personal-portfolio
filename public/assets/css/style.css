@@ -315,7 +315,11 @@ p{ margin: 0; }
   color: var(--body);
 }
 
+/* --photo-w = portrait width. The photo and the glow both use it, so they stay in proportion. */
 .hero-photo-wrap{
+  --photo-w: 380px;
+  position: relative;
+  isolation: isolate;
   opacity: 0;
   animation: hero-rise .5s cubic-bezier(.16,.8,.24,1) .12s forwards;
   display: flex;
@@ -382,22 +386,37 @@ p{ margin: 0; }
 
 .hero-link:hover{ color: var(--ink); }
 
+/* Portrait: no border, no card corners, natural proportions (height: auto), soft real shadow */
 .hero-photo{
+  position: relative;
+  z-index: 1;
   width: 100%;
-  max-width: 380px;
+  max-width: var(--photo-w);
   height: auto;
-  aspect-ratio: 4 / 5;
-  object-fit: cover;
-  object-position: center 25%;
-  border-radius: var(--r-md);
-  border: 1px solid var(--hairline);
+  filter: drop-shadow(0 4px 6px rgba(20, 23, 28, .10)) drop-shadow(0 18px 28px rgba(20, 23, 28, .14));
+}
+
+/* Soft three-color glow behind the portrait: no panel, no hard edges.
+   Each blob fades to transparent exactly at the box edge. */
+.hero-photo-glow{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 0;
+  width: calc(var(--photo-w) * 1.12);
+  height: calc(var(--photo-w) * 1.4);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  background:
+    radial-gradient(38% 30% at 38% 34%, #C7D2FE 0%, rgba(199, 210, 254, 0) 100%),
+    radial-gradient(36% 32% at 64% 36%, #E9D5FF 0%, rgba(233, 213, 255, 0) 100%),
+    radial-gradient(50% 28% at 50% 72%, #FFE4D6 0%, rgba(255, 228, 214, 0) 100%);
 }
 
 @media (max-width: 940px){
   .hero{ padding-top: 36px; }
   .hero-inner{ flex-direction: column; align-items: stretch; gap: var(--sp-6); }
-  .hero-photo-wrap{ order: -1; justify-content: center; }
-  .hero-photo{ width: 100%; max-width: clamp(220px, 55vw, 250px); }
+  .hero-photo-wrap{ order: -1; justify-content: center; --photo-w: clamp(220px, 55vw, 250px); }
 }
 
 /* =========================
@@ -698,8 +717,8 @@ p{ margin: 0; }
 
 .flip-back .project-stack{ margin: 0 0 18px; }
 
-/* Action button(s) follow the tags directly (no longer pushed to the bottom) */
-.flip-actions{ display: flex; flex-wrap: wrap; gap: var(--sp-3); margin-top: 4px; }
+/* Action button(s) sit right under the tags (not pushed to the bottom) */
+.flip-actions{ display: flex; flex-wrap: wrap; gap: var(--sp-3); margin-top: 0; }
 
 @media (max-width: 540px){
   .flip-face{ padding: var(--sp-5); }
@@ -1001,24 +1020,3 @@ button.cert-thumb{
 .reveal{ opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s ease; }
 
 .reveal.in{ opacity: 1; transform: translateY(0); }
-/* ----- Back face: compact spacing (back only, the front is not touched) -----
-   ".flip-card .flip-back" is more specific than the older rules,
-   so these values win even if an old gap / margin-top: auto is still in the file. */
-.flip-card .flip-back{
-  justify-content: flex-start;  /* content starts at the top, never spread out */
-  gap: 0;                       /* spacing now comes from the margins below */
-}
-
-.flip-card .flip-back .back-button{
-  align-self: flex-start;
-  flex: none;
-  width: fit-content;
-  margin: 0 0 16px;             /* 16px between ← Back and the title */
-}
-
-.flip-card .flip-back h3{ margin: 0 0 12px; text-align: center; }
-.flip-card .flip-back > p{ margin: 0 0 16px; }
-.flip-card .flip-back .project-features{ margin: 0 0 16px; }
-.flip-card .flip-back .project-features ul{ margin: 0; }
-.flip-card .flip-back .project-stack{ margin: 0 0 18px; }
-.flip-card .flip-back .flip-actions{ margin: 0; }  /* sits right under the tags */

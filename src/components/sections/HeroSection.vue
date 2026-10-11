@@ -75,6 +75,8 @@ const heroLinks = [
       </div>
 
       <div class="hero-photo-wrap">
+        <!-- Decorative glow behind the portrait (hidden from screen readers) -->
+        <div class="hero-photo-glow" aria-hidden="true"></div>
         <img
           src="/assets/profile/nethuselah-bunag.png"
           alt="Portrait of Nethuselah S.P. Bunag"
