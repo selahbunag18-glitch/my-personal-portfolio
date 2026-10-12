@@ -28,9 +28,11 @@ const learningItems = [
   <section class="section section-alt" id="learning">
     <div class="section-inner">
       <div class="section-head">
-        <p class="eyebrow">Experience</p>
-        <h2>Learning &amp; experience</h2>
-        <p class="section-lede">I don't have formal work experience yet — here's where my learning has come from.</p>
+        <h2>Experience &amp; Learning</h2>
+        <p class="section-lede">
+          My experience comes from academic projects, personal projects,
+          and continuous learning in web development.
+        </p>
       </div>
 
       <div class="learning-grid">

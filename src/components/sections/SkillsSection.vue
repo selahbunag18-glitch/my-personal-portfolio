@@ -19,9 +19,11 @@ function formatNumber(index) {
   <section class="section section-alt" id="skills">
     <div class="section-inner">
       <div class="section-head">
-        <p class="eyebrow">Skills</p>
-        <h2>Technical skills</h2>
-        <p class="section-lede">Technologies and tools I currently use and am comfortable with.</p>
+        <h2>Technical Skills</h2>
+        <p class="section-lede">
+          Programming languages, frameworks, and tools I use in building
+          responsive websites and developing my frontend skills.
+        </p>
       </div>
 
       <div class="skills-grid">

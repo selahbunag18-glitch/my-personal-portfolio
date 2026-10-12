@@ -37,10 +37,12 @@ const contactLinks = [
 <template>
   <section class="section contact" id="contact">
     <div class="section-inner contact-inner">
-      <p class="eyebrow">Contact</p>
-      <h2>Let's talk.</h2>
-      <p class="section-lede">Open to internship opportunities, collaboration, or just a conversation about web development. Reach out through any of these.</p>
-
+      <h2>Contact Me</h2>
+      <p class="section-lede">
+        I'm open to internship opportunities, collaboration, and
+        opportunities to grow as a frontend developer. Feel free to
+        reach out through any of the links below.
+      </p>
       <div class="contact-grid">
         <a
           v-for="link in contactLinks"

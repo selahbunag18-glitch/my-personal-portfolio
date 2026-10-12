@@ -13,8 +13,7 @@ const educationItems = [
   <section class="section section-alt" id="education">
     <div class="section-inner">
       <div class="section-head">
-        <p class="eyebrow">Education</p>
-        <h2>Where I'm studying.</h2>
+        <h2>Education</h2>
       </div>
 
       <div v-for="item in educationItems" :key="item.degree" class="edu-card">

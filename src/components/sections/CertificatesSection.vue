@@ -82,9 +82,11 @@ onBeforeUnmount(() => {
   <section class="section" id="certificates">
     <div class="section-inner">
       <div class="section-head">
-        <p class="eyebrow">Certificates</p>
-        <h2>Webinar participation.</h2>
-        <p class="section-lede">Certificates of participation from webinars I've attended — not professional licenses or certifications.</p>
+       <h2>Certificates &amp; Training</h2>
+        <p class="section-lede">
+         Certificates of participation from webinars and learning activities
+         I've attended to improve my knowledge of web development.
+         </p>
       </div>
 
       <div class="cert-grid">

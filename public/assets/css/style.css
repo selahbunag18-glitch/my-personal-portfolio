@@ -105,7 +105,8 @@ p{ margin: 0; }
   gap: var(--sp-2);
   font-family: var(--font-mono);
   font-size: 13px;
-  letter-spacing: .06em;
+  font-weight: 500;
+  letter-spacing: .07em;
   text-transform: uppercase;
   color: var(--muted);
   margin-bottom: var(--sp-4);
@@ -274,7 +275,12 @@ p{ margin: 0; }
 
 .section-head{ max-width: 640px; margin-bottom: var(--sp-8); }
 
-.section-head h2{ font-size: clamp(28px, 4vw, 40px); line-height: 1.15; }
+.section-head h2{
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 700;
+  line-height: 1.15;
+  text-wrap: balance;
+}
 
 .section-lede{ margin-top: var(--sp-3); color: var(--body); font-size: 17px; }
 
@@ -471,6 +477,7 @@ p{ margin: 0; }
 .skill-card h3{
   font-size: 17px;
   font-weight: 600;
+  line-height: 1.25;
   display: flex;
   align-items: center;
   gap: var(--sp-3);
@@ -654,7 +661,13 @@ p{ margin: 0; }
   margin-bottom: var(--sp-5);
 }
 
-.flip-front h3{ font-size: 22px; line-height: 1.25; margin-bottom: var(--sp-3); }
+.flip-front h3{
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.25;
+  text-wrap: balance;
+  margin-bottom: var(--sp-3);
+}
 .flip-front p{ font-size: 15px; margin-bottom: var(--sp-5); }
 
 /* "Learn More →" is a plain text link: no background, border, padding or pill shape.
@@ -706,7 +719,9 @@ p{ margin: 0; }
 .flip-back h3{
   margin: 0 0 12px;
   font-size: 22px;
+  font-weight: 600;
   line-height: 1.25;
+  text-wrap: balance;
   text-align: center;
 }
 
@@ -741,7 +756,13 @@ p{ margin: 0; }
   padding: var(--sp-5);
 }
 
-.learning-card h3{ font-size: 18px; margin: var(--sp-2) 0 var(--sp-3); }
+.learning-card h3{
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.25;
+  text-wrap: balance;
+  margin: var(--sp-2) 0 var(--sp-3);
+}
 
 .learning-card p{ font-size: 15px; }
 
@@ -811,13 +832,19 @@ p{ margin: 0; }
 
 .cert-card-top .icon-certificate{ width: 26px; height: 26px; flex: none; display: block; object-fit: contain; }
 
-.cert-card h3{ font-size: 19px; margin-bottom: var(--sp-2); }
+.cert-card h3{
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.25;
+  text-wrap: balance;
+  margin-bottom: var(--sp-2);
+}
 
 .cert-theme{ font-size: 15px; font-style: italic; color: var(--body); margin-bottom: var(--sp-5); }
 
 .cert-meta{ display: flex; gap: var(--sp-7); flex-wrap: wrap; }
 
-.cert-meta dt{ font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+.cert-meta dt{ font-family: var(--font-mono); font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); }
 
 .cert-meta dd{ margin: 2px 0 0; font-weight: 600; color: var(--ink); font-size: 14px; }
 
@@ -909,7 +936,13 @@ button.cert-thumb{
   flex-wrap: wrap;
 }
 
-.edu-card h3{ font-size: 20px; margin-bottom: var(--sp-2); }
+.edu-card h3{
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.25;
+  text-wrap: balance;
+  margin-bottom: var(--sp-2);
+}
 
 .edu-card p{ color: var(--body); font-size: 15px; }
 
@@ -934,7 +967,13 @@ button.cert-thumb{
 
 .contact .eyebrow{ color: var(--on-dark-muted); }
 
-.contact h2{ color: var(--on-dark); }
+.contact h2{
+  color: var(--on-dark);
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 700;
+  line-height: 1.15;
+  text-wrap: balance;
+}
 
 .contact .section-lede{ color: var(--on-dark-muted); }
 

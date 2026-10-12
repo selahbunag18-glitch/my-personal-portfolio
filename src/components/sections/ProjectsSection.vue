@@ -46,8 +46,7 @@ function toggleCard(project) {
   <section class="section" id="projects">
     <div class="section-inner">
       <div class="section-head">
-        <p class="eyebrow">Projects</p>
-        <h2>Featured work.</h2>
+       <h2>Featured Projects</h2>
       </div>
 
       <div class="flip-grid">
