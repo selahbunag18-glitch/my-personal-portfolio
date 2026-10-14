@@ -1,7 +1,6 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 
-// true = the button is shown (page scrolled more than 480px)
 const isVisible = ref(false)
 
 function handleScroll() {
@@ -13,7 +12,7 @@ function scrollToTop() {
 }
 
 onMounted(() => {
-  handleScroll() // check once in case the page loads already scrolled
+  handleScroll()
   window.addEventListener('scroll', handleScroll, { passive: true })
 })
 
